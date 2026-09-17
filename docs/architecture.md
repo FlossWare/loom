@@ -37,7 +37,7 @@ A domain ecosystem adds domain-specific Contracts and Implementations without ch
 
 ## Platforms
 
-A platform is a declarative composition of implementations. Fullsend is intended to be a platform built from Loom and `loom-ai` services.
+A platform is a declarative composition of implementations. Concrete platforms are consumers of Loom and domain ecosystems, not part of the Loom protocol itself.
 
 A platform definition is not the same thing as the execution engine that realizes it.
 
@@ -50,4 +50,4 @@ The architecture should satisfy these tests:
 3. HTTP and JMS bindings can expose the same Contract semantics.
 4. A Plan can contain another Plan without a special-case protocol hierarchy.
 5. An implementation can be acquired by a Builder when no suitable running instance exists.
-6. Fullsend can consume Loom and `loom-ai` services without defining Loom semantics itself.
+6. A concrete platform can consume Loom and a domain ecosystem without defining Loom semantics itself.
