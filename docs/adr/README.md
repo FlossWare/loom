@@ -11,3 +11,4 @@ Current ADRs:
 - 0003: Plan is an Implementation
 - 0004: Conformance is a first-class deliverable
 - 0005: An execution engine is an Implementation
+- 0006: Implementation Builder acquisition is part of Loom discovery
