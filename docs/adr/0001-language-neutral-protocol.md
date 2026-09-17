@@ -62,7 +62,7 @@ Machine-checkable conformance is a first-class protocol deliverable. A reference
 - Loom can have independent implementations in multiple languages.
 - `loom-ai` can evolve without becoming the specification.
 - Transport and deployment can vary without redefining contracts.
-- Fullsend can be validated as a platform composition rather than as the definition of Loom.
+- Concrete platforms can be validated as platform compositions rather than as the definition of Loom.
 - Other ecosystems, including workflow engines, can use Loom without adopting AI-specific semantics.
 
 ### Negative
