@@ -31,7 +31,6 @@ The core model is intentionally recursive. A Worker, Plan, service, builder, or 
 
 - **`loom`**: the normative Loom protocol, semantic model, binding model, and conformance requirements.
 - **`loom-ai`**: an AI-oriented implementation of Loom, including Workers, Arbiters, model capabilities, and AI-specific realizations.
-- **Fullsend**: a future platform composition built from Loom and `loom-ai` services.
 
 `loom-ai` must not become the de facto specification for Loom. A future `loom-java` should be able to implement the same semantics from this repository without reverse-engineering Python classes.
 
