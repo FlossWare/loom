@@ -1,6 +1,6 @@
 # Migration from `loom-ai`
 
-The Loom protocol was initially documented inside `FlossWare/loom-ai`. With the creation of this repository, generic Loom architecture moves here.
+The Loom protocol was initially documented inside `loom-ai`. With the creation of this repository, generic Loom architecture moves here.
 
 ## Canonical ownership
 
@@ -13,7 +13,7 @@ The Loom protocol was initially documented inside `FlossWare/loom-ai`. With the 
 | Workers and Arbiters | `FlossWare/loom-ai` |
 | Model services/providers | `FlossWare/loom-ai` |
 | AI-specific builders | `FlossWare/loom-ai` |
-| Concrete platform compositions | platform repository, such as Fullsend |
+| Concrete platform compositions | platform-specific repository |
 
 Issue tracking follows the same ownership boundary. Generic Loom issues belong here; AI-specific implementation issues remain in `loom-ai`.
 
