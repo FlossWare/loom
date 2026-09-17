@@ -29,4 +29,4 @@ Implementation repositories may add local tests, but local tests do not replace 
 
 ## Consequences
 
-A future `loom-java` can be validated against the same semantic expectations as `loom-ai`. Fullsend provides an end-to-end platform test, but it is not itself the conformance suite.
+A future `loom-java` can be validated against the same semantic expectations as `loom-ai`. Concrete platform compositions provide useful end-to-end integration tests, but they are not themselves the conformance suite.
