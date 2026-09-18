@@ -6,33 +6,49 @@ Loom is not an AI framework, a Python application, an HTTP API, or a mandatory m
 
 An implementation may be written in Python, Java, Erlang, or another language. A binding may use HTTP/REST, JMS, another URI-addressed transport, or in-process invocation. Those are realizations of Loom, not definitions of it.
 
+## Repository family
+
+Loom follows the FlossWare contract-centric repository convention:
+
+    loom
+    loom-python
+    loom-ai
+    loom-ai-python
+
+- **loom**: foundational, language-neutral Loom protocol and semantic contract.
+- **loom-python**: Python implementation of the Loom contract.
+- **loom-ai**: AI-domain contracts and semantics built on Loom.
+- **loom-ai-python**: Python implementation of the Loom AI contracts.
+
+Future implementations are peers, not replacements for the language-neutral contract:
+
+    loom-java
+    loom-erlang
+    loom-ai-java
+    loom-ai-erlang
+
+The repository naming and layering rule is defined by FlossWare engineering standard ADR-0024.
+
 ## Architecture
 
-```text
-                         Loom
-                          │
-       ┌──────────────────┼──────────────────┐
-       │                  │                  │
-   Contracts          Discovery          Invocation
-       │                  │                  │
-   Requirements      Providers/Builders    Bindings
-   Capabilities          │                  │
-       │             Implementations      URI
-       └──────────────────┼──────────────────┘
-                          │
-                       Plans
-                          │
-                 Results / Evidence
-```
+    Loom
+      |
+      +-- Contracts
+      +-- Discovery
+      +-- Invocation
+      +-- Providers/Builders
+      +-- Implementations
+      +-- Bindings
+      +-- Plans
+      +-- Results / Evidence
 
 The core model is intentionally recursive. A Worker, Plan, service, builder, or other implementation is governed by the same protocol rules. A Plan may therefore compose other implementations without becoming a privileged primitive.
 
-## Repository boundaries
+## Repository boundary
 
-- **`loom`**: the normative Loom protocol, semantic model, binding model, and conformance requirements.
-- **`loom-ai`**: an AI-oriented implementation of Loom, including Workers, Arbiters, model capabilities, and AI-specific realizations.
+loom is the normative home of Loom itself: protocol semantics, binding semantics, and conformance requirements.
 
-`loom-ai` must not become the de facto specification for Loom. A future `loom-java` should be able to implement the same semantics from this repository without reverse-engineering Python classes.
+AI-specific semantics belong in loom-ai. Language implementations belong in the corresponding -{language} repository. loom must remain independent of Python, Java, Erlang, frameworks, and vendors.
 
 ## Core principles
 
@@ -64,4 +80,4 @@ Loom does not require:
 
 The repository is intentionally specification-first. The initial work establishes the semantic vocabulary and boundaries before implementation is added.
 
-See [`docs/specification.md`](docs/specification.md) for the current normative model and [`docs/adr/0001-language-neutral-protocol.md`](docs/adr/0001-language-neutral-protocol.md) for the architectural decision establishing this repository as the home of Loom itself.
+See docs/specification.md for the current normative model and docs/adr/0001-language-neutral-protocol.md for the architectural decision establishing this repository as the home of Loom itself.
