@@ -1,20 +1,27 @@
-# Migration from `loom-ai`
+# Migration from loom-ai
 
-The Loom protocol was initially documented inside `loom-ai`. With the creation of this repository, generic Loom architecture moves here.
+The Loom protocol was initially documented inside loom-ai. Generic Loom architecture now belongs here, while AI-specific contracts and implementations are separated into the contract family defined by the FlossWare repository-layering standard.
 
 ## Canonical ownership
 
 | Concern | Repository |
 |---|---|
-| Loom protocol and semantics | `FlossWare/loom` |
-| Loom conformance | `FlossWare/loom` |
-| Loom binding specifications | `FlossWare/loom` |
-| AI-specific Contracts and Implementations | `FlossWare/loom-ai` |
-| Workers and Arbiters | `FlossWare/loom-ai` |
-| Model services/providers | `FlossWare/loom-ai` |
-| AI-specific builders | `FlossWare/loom-ai` |
+| Loom protocol and semantics | FlossWare/loom |
+| Loom conformance | FlossWare/loom |
+| Loom binding specifications | FlossWare/loom |
+| Loom Python implementation | FlossWare/loom-python |
+| AI-specific Contracts and semantics | FlossWare/loom-ai |
+| AI Python implementations | FlossWare/loom-ai-python |
+| Future AI implementations | {contract}-{domain}-{language} repositories |
 | Concrete platform compositions | platform-specific repository |
 
-Issue tracking follows the same ownership boundary. Generic Loom issues belong here; AI-specific implementation issues remain in `loom-ai`.
+The repository family follows:
 
-The migration is deliberately additive. Existing implementation code is not moved merely to make the repository names look tidy. Code moves only when its semantics belong to Loom itself and an implementation-neutral realization is appropriate.
+    loom
+    loom-python
+    loom-ai
+    loom-ai-python
+
+Issue tracking follows the same ownership boundary. Generic Loom issues belong here; language-specific implementation issues belong in the relevant implementation repository; AI-domain contract issues belong in loom-ai; AI implementation issues belong in loom-ai-python.
+
+The migration is deliberately semantic rather than cosmetic. Code moves when its ownership belongs in a different layer, not merely to make repository names look tidy.
