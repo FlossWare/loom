@@ -7,7 +7,8 @@ The suite will be developed against the normative semantics in this repository, 
 ## Initial areas
 
 - Contract identity and version compatibility
-- Requirement/Capability matching
+- Requirement/Capability matching: exact Contract identity, explicit version compatibility, required attributes, and cardinality
+- Separation of candidate eligibility from candidate selection; explicit unsatisfied requirements
 - Registration
 - Discovery
 - Provider/Builder acquisition
