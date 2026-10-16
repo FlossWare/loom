@@ -116,6 +116,22 @@ The suite SHOULD include positive and negative cases that distinguish:
 - a protocol failure whose machine-readable category remains available even if
   its human-readable message changes.
 
+
+## Execution evidence, trace, and evaluation fixture
+
+[execution-evidence-success-001.json](fixtures/execution-evidence-success-001.json) demonstrates a successful execution with ordered trace events, a provenance-linked output artifact, and a criterion-level evaluation. Its envelope is defined by [execution-evidence-0.1.json](../../schemas/execution-evidence-0.1.json); the semantic requirements are defined in [Execution Evidence, Trace, and Evaluation Contracts](execution-evidence.md).
+
+The fixture is illustrative and intentionally marks the artifact digest as `unverified`. A digest value alone is not proof that the artifact was fetched or verified. Conformance adapters SHOULD validate the envelope against the declared JSON Schema and then test behavioral requirements that structural validation cannot establish.
+
+Additional fixtures SHOULD cover at least:
+
+- accepted execution failure versus protocol rejection before acceptance;
+- missing required evidence despite a claimed successful Result;
+- evidence whose integrity check fails or whose artifact is unavailable;
+- evaluations with `not_met`, `inconclusive`, and `not_evaluated` outcomes;
+- trace events with duplicate identifiers or reused per-execution sequence numbers;
+- redaction of credentials and exclusion of private model chain-of-thought.
+
 ## Relationship to the normative specification
 
 This document describes the test mechanism. It does not freeze unresolved protocol semantics.
