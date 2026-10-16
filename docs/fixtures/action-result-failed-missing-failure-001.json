@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.1",
+  "id": "action-result-failed-missing-failure-001",
+  "semantic_area": "action_result_schema",
+  "contract": {
+    "id": "loom.action-result-envelope",
+    "version": "0.1"
+  },
+  "operation": "validate_schema",
+  "input": {
+    "schema": "schemas/action-result-0.1.json",
+    "result": {
+      "schema_version": "0.1",
+      "result_id": "result-002",
+      "execution_id": "execution-002",
+      "outcome": "failed"
+    }
+  },
+  "expected": {
+    "outcome": "schema_invalid",
+    "schema_valid": false,
+    "reason": "failure_required_for_failed_outcome"
+  }
+}
