@@ -6,7 +6,12 @@
   "$defs": {
     "action": {
       "type": "object",
-      "required": ["action_id", "contract_id", "contract_version", "input"],
+      "required": [
+        "action_id",
+        "contract_id",
+        "contract_version",
+        "input"
+      ],
       "properties": {
         "schema_version": {
           "const": "0.1"
@@ -42,7 +47,12 @@
     },
     "result": {
       "type": "object",
-      "required": ["schema_version", "result_id", "execution_id", "outcome"],
+      "required": [
+        "schema_version",
+        "result_id",
+        "execution_id",
+        "outcome"
+      ],
       "properties": {
         "schema_version": {
           "const": "0.1"
@@ -79,7 +89,9 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["kind"],
+            "required": [
+              "kind"
+            ],
             "properties": {
               "kind": {
                 "type": "string",
@@ -147,17 +159,27 @@
           "if": {
             "properties": {
               "outcome": {
-                "enum": ["failed", "policy_denied", "cancelled", "deadline_exceeded"]
+                "enum": [
+                  "failed",
+                  "policy_denied",
+                  "cancelled",
+                  "deadline_exceeded"
+                ]
               }
             },
-            "required": ["outcome"]
+            "required": [
+              "outcome"
+            ]
           },
           "then": {
             "properties": {
               "failure": {
                 "$ref": "#/$defs/failure"
               }
-            }
+            },
+            "required": [
+              "failure"
+            ]
           }
         }
       ],
@@ -165,7 +187,9 @@
     },
     "failure": {
       "type": "object",
-      "required": ["category"],
+      "required": [
+        "category"
+      ],
       "properties": {
         "category": {
           "type": "string",
@@ -188,7 +212,9 @@
     },
     "artifact": {
       "type": "object",
-      "required": ["artifact_id"],
+      "required": [
+        "artifact_id"
+      ],
       "properties": {
         "artifact_id": {
           "type": "string",
@@ -204,7 +230,10 @@
         },
         "digest": {
           "type": "object",
-          "required": ["algorithm", "value"],
+          "required": [
+            "algorithm",
+            "value"
+          ],
           "properties": {
             "algorithm": {
               "type": "string",
@@ -218,14 +247,21 @@
           "additionalProperties": false
         },
         "integrity_status": {
-          "enum": ["unverified", "verified", "invalid", "unavailable"]
+          "enum": [
+            "unverified",
+            "verified",
+            "invalid",
+            "unavailable"
+          ]
         }
       },
       "additionalProperties": true
     },
     "evidence_reference": {
       "type": "object",
-      "required": ["evidence_id"],
+      "required": [
+        "evidence_id"
+      ],
       "properties": {
         "evidence_id": {
           "type": "string",
