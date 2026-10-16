@@ -147,6 +147,16 @@ The initial common envelopes are defined by [action-result-0.1.json](../../schem
 
 The policy-denial example is an accepted-operation Result, not a pre-acceptance protocol rejection. A binding must report pre-acceptance rejection through its protocol-failure contract and must not invent an execution Result for work that was never accepted. The cancellation and deadline examples represent terminal outcomes; they do not by themselves establish that the implementation stopped work before committing that terminal state. The retryable hint is descriptive input to policy and MUST NOT cause an automatic retry without authorization from the applicable Contract and execution policy.
 
+
+### Schema-validity fixtures
+
+These two fixtures test the conditional schema rule that failed Results require a structured `failure` object. A conformance runner SHOULD validate the nested `input.result` value against `schemas/action-result-0.1.json`, then compare the validator outcome with `expected.schema_valid`:
+
+- [action-result-failed-with-failure-001.json](fixtures/action-result-failed-with-failure-001.json): expected to pass structural validation.
+- [action-result-failed-missing-failure-001.json](fixtures/action-result-failed-missing-failure-001.json): expected to fail because `outcome: failed` requires `failure`.
+
+These fixtures deliberately distinguish fixture-envelope validation from the nested Action/Result schema check. Validating the outer conformance fixture alone is not evidence that its embedded Result satisfies the Action/Result contract.
+
 ## Relationship to the normative specification
 
 This document describes the test mechanism. It does not freeze unresolved protocol semantics.
