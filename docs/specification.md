@@ -304,7 +304,65 @@ Contract / Requirement
        Result        Evidence
 ```
 
-The exact resolution algorithm is not yet frozen. In particular, matching semantics, cardinality, version ranges, lifecycle transitions, conflict handling, and failure recovery require further normative definition.
+### 3.1 Requirement resolution
+
+A conforming resolver MUST perform resolution as an explicit sequence rather than
+treating discovery order as an implicit selection policy:
+
+1. Validate the Requirement and its Contract identity, version-compatibility
+   condition, required attributes, and cardinality.
+2. Discover registered Implementations and retain only candidates eligible
+   under the matching rules in Section 2.5.
+3. Determine whether the eligible set can satisfy the Requirement's cardinality.
+   If exactly one eligible candidate is required and found, it may be selected
+   directly. If several candidates are eligible, selection MUST follow a
+   declared policy; if no policy resolves the ambiguity, the resolver MUST
+   report ambiguity rather than silently use registry or network response order.
+4. If registered candidates cannot satisfy the Requirement and acquisition is
+   supported, discover Providers/Builders that declare the ability to produce
+   an Implementation for the target Contract. The Builder's own eligibility
+   does not count as satisfaction of the target Requirement.
+5. Acquire/build the candidate, then validate its Contract identity, version,
+   required Capabilities, and other declared conformance obligations before
+   treating the Requirement as satisfied.
+6. If no eligible set can satisfy required cardinality, return an explicit
+   unsatisfied-resolution outcome. Do not silently substitute an incompatible
+   Implementation or claim successful resolution.
+
+A resolver MAY apply declared cost, health, locality, policy, or other selection
+criteria among eligible candidates. Those criteria MUST NOT override the
+eligibility rules or silently weaken a Requirement.
+
+### 3.2 Handoff between Implementations
+
+A **handoff** transfers control and the contract-required context from one
+Implementation to another within a Plan or composed Execution. Handoff is
+observable behavior of composition, not a new privileged protocol primitive.
+
+A conforming handoff MUST preserve the Execution identity and transfer the
+contract-required inputs, relevant prior Result, required Evidence, provenance,
+and applicable constraints needed by the receiving Implementation. Structured
+Results and Evidence MUST NOT be flattened into a prose summary when the
+receiving Contract requires the original structure or artifacts.
+
+The sender MUST transfer only context that is authorized for the receiver and
+necessary for the declared operation. Credentials, private reasoning, and
+unrelated local state MUST NOT be forwarded implicitly. The receiving
+Implementation MUST validate its inputs and apply its own authorization rules;
+provenance claims do not bypass those checks.
+
+Context size, schema, and truncation behavior MUST be explicit in the applicable
+Contract or Binding. A handoff that cannot preserve required context MUST fail
+explicitly rather than silently truncate or reinterpret it. If the Contract
+requires cancellation, deadlines, or other execution constraints to propagate,
+handoff MUST preserve them without resetting or extending their meaning.
+
+Local and remote handoffs MUST preserve the same Contract semantics. Remote
+transport may add authentication, authorization, serialization, and delivery
+requirements, but it MUST NOT create a different execution or Result meaning.
+A Contract that promises idempotent handoff or retry behavior MUST define how
+duplicate deliveries are recognized and what observable outcome they produce.
+
 
 ## 4. Lifecycle
 

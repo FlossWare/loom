@@ -83,6 +83,23 @@ These fixtures test semantic distinctions, not a required wire vocabulary. Each
 fixture must state the Contract-specific labels and their mapping to the
 normative semantic conditions.
 
+## Resolution and handoff fixtures
+
+The conformance suite SHOULD include cases for:
+
+- no candidate satisfying the required Contract identity or version condition;
+- a missing required attribute that makes a candidate ineligible;
+- several eligible candidates with no selection policy, producing explicit
+  ambiguity rather than discovery-order selection;
+- an eligible Builder whose produced Implementation fails target-contract
+  validation and therefore does not satisfy the Requirement;
+- a handoff that preserves required prior Result, Evidence, provenance, and
+  execution constraints;
+- a handoff that attempts to transfer unauthorized context and is rejected;
+- context that exceeds a declared limit, producing an explicit failure rather
+  than silent truncation;
+- local and remote handoffs that preserve the same observable contract semantics.
+
 ## Relationship to the normative specification
 
 This document describes the test mechanism. It does not freeze unresolved protocol semantics.
