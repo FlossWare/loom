@@ -132,6 +132,16 @@ Additional fixtures SHOULD cover at least:
 - trace events with duplicate identifiers or reused per-execution sequence numbers;
 - redaction of credentials and exclusion of private model chain-of-thought.
 
+## Typed Action and Result fixtures
+
+The initial common envelopes are defined by [action-result-0.1.json](../../schemas/action-result-0.1.json), with the semantic contract in [Action and Result Contracts](../action-result-contracts.md). The following examples cover distinct artifacts:
+
+- [action-envelope-001.json](fixtures/action-envelope-001.json): a contract-identified Action with structured input;
+- [result-envelope-success-001.json](fixtures/result-envelope-success-001.json): a successful Result with typed output, observation, evidence reference, and provenance;
+- [result-policy-denied-001.json](fixtures/result-policy-denied-001.json): an explicit policy-denial outcome with a stable failure category and non-retryable classification.
+
+The policy-denial example is an accepted-operation Result, not a pre-acceptance protocol rejection. A binding must report pre-acceptance rejection through its protocol-failure contract and must not invent an execution Result for work that was never accepted.
+
 ## Relationship to the normative specification
 
 This document describes the test mechanism. It does not freeze unresolved protocol semantics.
