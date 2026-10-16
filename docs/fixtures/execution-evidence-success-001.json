@@ -21,7 +21,9 @@
       "event_type": "execution.verification",
       "occurred_at": "2026-10-16T12:00:02Z",
       "outcome": "passed",
-      "artifact_refs": ["artifact.example.output.001"],
+      "artifact_refs": [
+        "artifact.example.output.001"
+      ],
       "attributes": {
         "criterion_id": "criterion.output-present"
       }
@@ -46,7 +48,9 @@
         "event_id": "event.example.verification.001"
       },
       "created_at": "2026-10-16T12:00:02Z",
-      "supports": ["criterion.output-present"],
+      "supports": [
+        "criterion.output-present"
+      ],
       "artifact": {
         "uri": "urn:example:artifact:output:001",
         "media_type": "text/plain",
@@ -75,11 +79,28 @@
         {
           "criterion_id": "criterion.output-present",
           "outcome": "met",
-          "evidence_ids": ["evidence.example.output.001"],
+          "evidence_ids": [
+            "evidence.example.output.001"
+          ],
           "summary": "The required output artifact was present."
         }
       ],
       "evaluated_at": "2026-10-16T12:00:03Z"
+    }
+  ],
+  "usage_metadata": [
+    {
+      "metric": "duration",
+      "value": 3,
+      "unit": "second",
+      "source": {
+        "type": "execution-runtime",
+        "id": "runtime.example.1"
+      },
+      "measured_at": "2026-10-16T12:00:03Z",
+      "attributes": {
+        "measurement": "elapsed-wall-clock"
+      }
     }
   ]
 }
