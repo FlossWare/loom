@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1",
+  "id": "action-result-failed-with-failure-001",
+  "semantic_area": "action_result_schema",
+  "contract": {
+    "id": "loom.action-result-envelope",
+    "version": "0.1"
+  },
+  "operation": "validate_schema",
+  "input": {
+    "schema": "schemas/action-result-0.1.json",
+    "result": {
+      "schema_version": "0.1",
+      "result_id": "result-001",
+      "execution_id": "execution-001",
+      "outcome": "failed",
+      "failure": {
+        "category": "verification_failed",
+        "message": "Required acceptance criteria were not met",
+        "retryable": false
+      }
+    }
+  },
+  "expected": {
+    "outcome": "schema_valid",
+    "schema_valid": true
+  }
+}
