@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1",
+  "result_id": "result.example.cancelled.001",
+  "execution_id": "exec.example.cancelled.001",
+  "outcome": "cancelled",
+  "failure": {
+    "category": "execution.cancelled",
+    "message": "Execution was cancelled after the accepted cancellation request.",
+    "retryable": false
+  },
+  "evidence": [],
+  "provenance": {
+    "implementation_id": "impl.example.execution-service.1",
+    "event_ids": [
+      "event.example.cancelled.001"
+    ]
+  }
+}

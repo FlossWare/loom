@@ -138,9 +138,13 @@ The initial common envelopes are defined by [action-result-0.1.json](../../schem
 
 - [action-envelope-001.json](fixtures/action-envelope-001.json): a contract-identified Action with structured input;
 - [result-envelope-success-001.json](fixtures/result-envelope-success-001.json): a successful Result with typed output, observation, evidence reference, and provenance;
-- [result-policy-denied-001.json](fixtures/result-policy-denied-001.json): an explicit policy-denial outcome with a stable failure category and non-retryable classification.
+- [result-policy-denied-001.json](fixtures/result-policy-denied-001.json): an explicit policy-denial outcome with a stable failure category and non-retryable classification;
+- [result-failed-retryable-001.json](fixtures/result-failed-retryable-001.json): a transient dependency failure whose retryable hint is true but does not itself authorize a retry;
+- [result-failed-permanent-001.json](fixtures/result-failed-permanent-001.json): a non-retryable failure for unsupported input;
+- [result-cancelled-001.json](fixtures/result-cancelled-001.json): a cancellation outcome that remains distinct from ordinary failure;
+- [result-deadline-exceeded-001.json](fixtures/result-deadline-exceeded-001.json): an expired deadline that remains distinct from user-requested cancellation.
 
-The policy-denial example is an accepted-operation Result, not a pre-acceptance protocol rejection. A binding must report pre-acceptance rejection through its protocol-failure contract and must not invent an execution Result for work that was never accepted.
+The policy-denial example is an accepted-operation Result, not a pre-acceptance protocol rejection. A binding must report pre-acceptance rejection through its protocol-failure contract and must not invent an execution Result for work that was never accepted. The cancellation and deadline examples represent terminal outcomes; they do not by themselves establish that the implementation stopped work before committing that terminal state. The retryable hint is descriptive input to policy and MUST NOT cause an automatic retry without authorization from the applicable Contract and execution policy.
 
 ## Relationship to the normative specification
 
