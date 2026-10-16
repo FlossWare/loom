@@ -4,7 +4,10 @@
   "title": "Loom Execution Evidence Envelope 0.1",
   "description": "Language-neutral envelope for observable execution trace events, evidence, and evaluations. Structural validation does not establish truth, authorization, or conformance.",
   "type": "object",
-  "required": ["schema_version", "execution_id"],
+  "required": [
+    "schema_version",
+    "execution_id"
+  ],
   "properties": {
     "schema_version": {
       "const": "0.1"
@@ -52,12 +55,67 @@
     "extensions": {
       "type": "object",
       "description": "Optional domain-specific extension data. MUST NOT contain credentials or private model chain-of-thought."
+    },
+    "usage_metadata": {
+      "type": "array",
+      "description": "Optional non-sensitive resource and operation measurements associated with this execution.",
+      "items": {
+        "type": "object",
+        "required": [
+          "metric",
+          "value",
+          "unit"
+        ],
+        "properties": {
+          "metric": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Stable metric identifier, such as duration, request_count, input_tokens, or output_tokens."
+          },
+          "value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Declared unit for the numeric value; values with different units are not directly comparable."
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": true
+          },
+          "measured_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "attributes": {
+            "type": "object",
+            "description": "Non-sensitive dimensions needed to interpret the measurement."
+          }
+        },
+        "additionalProperties": true
+      }
     }
   },
   "$defs": {
     "trace_event": {
       "type": "object",
-      "required": ["event_id", "execution_id", "event_type", "occurred_at"],
+      "required": [
+        "event_id",
+        "execution_id",
+        "event_type",
+        "occurred_at"
+      ],
       "properties": {
         "event_id": {
           "type": "string",
@@ -109,7 +167,11 @@
     },
     "evidence_item": {
       "type": "object",
-      "required": ["evidence_id", "kind", "source"],
+      "required": [
+        "evidence_id",
+        "kind",
+        "source"
+      ],
       "properties": {
         "evidence_id": {
           "type": "string",
@@ -121,7 +183,10 @@
         },
         "source": {
           "type": "object",
-          "required": ["type", "id"],
+          "required": [
+            "type",
+            "id"
+          ],
           "properties": {
             "type": {
               "type": "string",
@@ -167,7 +232,10 @@
             },
             "digest": {
               "type": "object",
-              "required": ["algorithm", "value"],
+              "required": [
+                "algorithm",
+                "value"
+              ],
               "properties": {
                 "algorithm": {
                   "type": "string",
@@ -181,7 +249,12 @@
               "additionalProperties": false
             },
             "integrity_status": {
-              "enum": ["unverified", "verified", "invalid", "unavailable"]
+              "enum": [
+                "unverified",
+                "verified",
+                "invalid",
+                "unavailable"
+              ]
             }
           },
           "additionalProperties": true
@@ -197,7 +270,12 @@
     },
     "evaluation": {
       "type": "object",
-      "required": ["evaluation_id", "execution_id", "result_id", "outcome"],
+      "required": [
+        "evaluation_id",
+        "execution_id",
+        "result_id",
+        "outcome"
+      ],
       "properties": {
         "evaluation_id": {
           "type": "string",
@@ -216,7 +294,12 @@
           "minLength": 1
         },
         "outcome": {
-          "enum": ["met", "not_met", "inconclusive", "not_evaluated"]
+          "enum": [
+            "met",
+            "not_met",
+            "inconclusive",
+            "not_evaluated"
+          ]
         },
         "evaluator": {
           "type": "object",
@@ -240,14 +323,22 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["criterion_id", "outcome"],
+            "required": [
+              "criterion_id",
+              "outcome"
+            ],
             "properties": {
               "criterion_id": {
                 "type": "string",
                 "minLength": 1
               },
               "outcome": {
-                "enum": ["met", "not_met", "inconclusive", "not_evaluated"]
+                "enum": [
+                  "met",
+                  "not_met",
+                  "inconclusive",
+                  "not_evaluated"
+                ]
               },
               "evidence_ids": {
                 "type": "array",
