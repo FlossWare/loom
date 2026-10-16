@@ -35,6 +35,22 @@ A domain ecosystem adds domain-specific Contracts and Implementations without ch
 
 `loom-ai` is the AI-oriented ecosystem and reference implementation currently being developed. It may define Workers, Arbiters, model services, and AI-specific builders, but those remain Loom Implementations.
 
+## Resolution and handoff
+
+The execution engine resolves Requirements by validating their constraints,
+discovering eligible Implementations, applying a declared selection policy,
+and using a Provider/Builder only when acquisition is supported. A produced
+Implementation must be validated against the target Contract before it counts
+as satisfying the Requirement. Ambiguous or unsatisfied resolution is an
+explicit outcome, not a reason to choose the first registry result.
+
+When a Plan hands work from one Implementation to another, it transfers the
+context required by the receiving Contract, including structured prior Results,
+Evidence, provenance, and applicable execution constraints. Context transfer is
+bounded and authorization-aware; credentials, private reasoning, and unrelated
+local state are never forwarded implicitly. Local and remote handoffs preserve
+the same Contract semantics.
+
 ## External clients and application boundary
 
 External clients interact with Loom through operations declared by a Contract
