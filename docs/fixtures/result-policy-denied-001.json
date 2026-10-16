@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1",
+  "result_id": "result.example.policy-denied.001",
+  "execution_id": "exec.example.policy-denied.001",
+  "outcome": "policy_denied",
+  "failure": {
+    "category": "policy.authorization_denied",
+    "message": "The requested operation is not authorized.",
+    "retryable": false,
+    "details": {
+      "policy_id": "policy.example.read-only"
+    }
+  },
+  "evidence": [],
+  "provenance": {
+    "implementation_id": "impl.example.policy-gate.1",
+    "event_ids": ["event.example.policy-denied.001"]
+  }
+}
