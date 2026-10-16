@@ -60,6 +60,29 @@ A conformance adapter is responsible for translating a fixture into the implemen
 
 For example, a `loom-ai` adapter may construct Python objects while a future `loom-java` adapter constructs Java objects. Both execute the same semantic fixture and evaluate the same expected outcome.
 
+## Execution and Result lifecycle fixtures
+
+Once the lifecycle semantics in the normative specification are accepted, the
+fixture suite SHOULD include positive and negative cases for:
+
+- an Execution that completes normally with a successful Result;
+- an Execution that completes but whose Result reports failure to meet the
+  Contract's success criteria;
+- a running Execution whose cancellation request is accepted but remains
+  pending until work stops;
+- a cancellation request against a terminal Execution that leaves its outcome
+  unchanged;
+- a deadline that expires before work starts and prevents new work from being
+  scheduled;
+- an interrupted Execution that resumes with the same identity and required
+  persisted context;
+- a successful Result missing required Evidence, which MUST fail conformance;
+- a partial Result that is incorrectly presented as full success.
+
+These fixtures test semantic distinctions, not a required wire vocabulary. Each
+fixture must state the Contract-specific labels and their mapping to the
+normative semantic conditions.
+
 ## Relationship to the normative specification
 
 This document describes the test mechanism. It does not freeze unresolved protocol semantics.
