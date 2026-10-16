@@ -41,8 +41,8 @@ Fixtures SHOULD include both positive and negative cases.
 The suite should grow from the protocol's semantic model in this order:
 
 1. Contract identity and compatibility
-2. Capability and Requirement matching
-3. Registration and Discovery
+2. Capability and Requirement matching (identity, compatibility, attributes, cardinality)
+3. Registration and Discovery (eligible candidates, completeness, and explicit unsatisfied results)
 4. Provider/Builder acquisition
 5. Endpoint and binding resolution
 6. Dependency resolution
