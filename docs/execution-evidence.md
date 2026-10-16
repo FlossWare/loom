@@ -59,6 +59,14 @@ Implementations MAY expose additional domain-specific outcomes, but MUST documen
 
 An evaluation SHOULD include criterion-level findings and references to supporting or contradicting evidence. It MAY include a score, but a score MUST NOT replace the explicit outcome or its criteria. Scores from different evaluators MUST NOT be compared unless their scales and semantics are declared compatible.
 
+## Usage metadata
+
+An execution MAY include `usage_metadata` measurements for relevant resource consumption or operation characteristics. Each measurement MUST identify a stable metric name, numeric value, and explicit unit. Examples include elapsed duration, request counts, bytes processed, or provider-reported token counts when an AI-domain implementation makes them relevant.
+
+Measurements MUST retain their unit and source so consumers do not compare unlike quantities or mistake provider-reported estimates for independently measured facts. Implementations SHOULD include a measurement timestamp and non-sensitive dimensions needed to interpret the value. Missing usage metadata MUST NOT be interpreted as zero usage.
+
+Usage metadata MUST NOT contain credentials, private model chain-of-thought, hidden prompts, or unrelated sensitive values. Provider-specific measurements are optional extensions; the common contract does not require a model provider or assume token accounting applies to every execution.
+
 ## Failure and redaction
 
 Protocol rejection before an execution is accepted is distinct from a failure of an accepted execution. Trace and evaluation adapters MUST preserve that distinction. Failure categories SHOULD be stable machine-readable identifiers; human-readable messages MAY change.
