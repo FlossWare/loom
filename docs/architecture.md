@@ -35,6 +35,25 @@ A domain ecosystem adds domain-specific Contracts and Implementations without ch
 
 `loom-ai` is the AI-oriented ecosystem and reference implementation currently being developed. It may define Workers, Arbiters, model services, and AI-specific builders, but those remain Loom Implementations.
 
+## External clients and application boundary
+
+External clients interact with Loom through operations declared by a Contract
+and exposed through a Binding. HTTP/REST, MCP, CLI/TUI, messaging, and in-process
+adapters are peers: they translate external requests and representations, but
+must not create a second execution authority or bypass the implementation's
+declared lifecycle, result, evidence, and provenance semantics.
+
+Loom does not mandate a universal Orchestrator class or canonical endpoint names.
+A domain Contract may define submit, observe, continue, cancellation, or deadline
+operations when its semantics require them. A Binding must document which
+operations it exposes and preserve their observable meaning.
+
+A Binding must explicitly document its authentication, authorization, and trust
+boundary. A local-only or trusted-environment binding must say so; transport
+selection alone does not establish authorization. Remote Loom-to-Loom integration
+uses the same Contract and Binding rules rather than introducing a privileged
+protocol path.
+
 ## Platforms
 
 A platform is a declarative composition of implementations. Concrete platforms are consumers of Loom and domain ecosystems, not part of the Loom protocol itself.

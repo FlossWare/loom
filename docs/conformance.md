@@ -19,6 +19,13 @@ The suite will be developed against the normative semantics in this repository, 
 - Result semantics
 - Evidence and provenance
 - Failure and protocol error behavior
+- External invocation boundary where declared by a Contract:
+  - stable execution identity and lifecycle observation;
+  - preservation of Result, Evidence, and provenance through a Binding;
+  - continuation from persisted state when durable continuation is promised;
+  - cancellation/deadline semantics where supported;
+  - separation of protocol failures from execution outcomes;
+  - documented authentication, authorization, and trust boundaries
 
 ## Implementation model
 

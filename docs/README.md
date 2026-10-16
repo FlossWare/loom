@@ -6,5 +6,6 @@
 - [`conformance-fixtures.md`](conformance-fixtures.md): machine-readable conformance fixture model
 - [`bindings/http-rest.md`](bindings/http-rest.md): proposed HTTP/REST binding requirements (does not make HTTP normative for Loom core)
 - [`research.md`](research.md): standards and prior-art research agenda
+- [`adr/0008-external-client-execution-boundary.md`](adr/0008-external-client-execution-boundary.md): contract-neutral external execution boundary
 - [`adr/`](adr/): architecture decisions
 - [`MIGRATION.md`](../MIGRATION.md): ownership transition from `loom-ai`
