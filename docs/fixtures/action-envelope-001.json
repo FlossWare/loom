@@ -1,0 +1,12 @@
+{
+  "schema_version": "0.1",
+  "action_id": "action.example.echo.001",
+  "contract_id": "example.echo",
+  "contract_version": "1",
+  "input": {
+    "message": "hello"
+  },
+  "metadata": {
+    "request_source": "conformance-fixture"
+  }
+}
