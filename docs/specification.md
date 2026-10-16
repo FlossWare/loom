@@ -119,6 +119,8 @@ Bindings MUST preserve the Contract semantics. The Loom protocol MUST NOT contai
 
 OpenAPI, where useful, describes an HTTP-facing realization. It does not define Loom itself.
 
+The proposed HTTP/REST binding requirements are documented separately in [`bindings/http-rest.md`](bindings/http-rest.md). They apply only when an implementation declares an HTTP binding and do not add transport-specific assumptions to this specification.
+
 ### 2.10 Plan
 
 A **Plan** is an Implementation that represents a composition or execution strategy for other Implementations.
