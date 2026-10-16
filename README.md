@@ -42,7 +42,7 @@ The repository naming and layering rule is defined by FlossWare engineering stan
       +-- Plans
       +-- Results / Evidence
 
-The core model is intentionally recursive. A Worker, Plan, service, builder, or other implementation is governed by the same protocol rules. A Plan may therefore compose other implementations without becoming a privileged primitive.
+The core model is intentionally recursive. Implementations are governed by the same protocol rules regardless of their internal form. A Plan may therefore compose other implementations without becoming a privileged primitive.
 
 ## Repository boundary
 
@@ -61,6 +61,17 @@ AI-specific semantics belong in loom-ai. Language implementations belong in the 
 7. **Evidence is first-class.** Results and evidence are language-neutral artifacts that support verification, evaluation, and audit.
 8. **Conformance matters.** Interoperability is demonstrated by machine-checkable protocol conformance, not by matching one reference implementation's classes.
 
+## Contract representation
+
+A Loom contract is expressed through complementary layers:
+
+1. **Normative semantics** define meaning, obligations, compatibility, and observable behavior.
+2. **Machine-readable schemas** define the structure of contract artifacts. JSON Schema is the initial structural representation.
+3. **Executable conformance** verifies behavioral obligations that schemas cannot express.
+4. **Protocol bindings** define how the same contract is exposed through a transport. OpenAPI is an HTTP binding, not the definition of Loom.
+
+No single serialization or transport format defines Loom.
+
 ## What Loom does not define
 
 Loom does not require:
@@ -78,6 +89,6 @@ Loom does not require:
 
 ## Specification status
 
-The repository is intentionally specification-first. The initial work establishes the semantic vocabulary and boundaries before implementation is added.
+The repository is intentionally specification-first. The initial work establishes the semantic vocabulary, contract representation layers, and boundaries before implementation is added.
 
-See docs/specification.md for the current normative model and docs/adr/0001-language-neutral-protocol.md for the architectural decision establishing this repository as the home of Loom itself.
+See docs/specification.md for the current normative model, docs/contract-representation.md for the representation layers, and docs/adr/0001-language-neutral-protocol.md for the architectural decision establishing this repository as the home of Loom itself.
