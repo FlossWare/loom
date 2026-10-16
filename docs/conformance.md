@@ -15,9 +15,11 @@ The suite will be developed against the normative semantics in this repository, 
 - Binding invocation
 - Dependency resolution
 - Plan composition
-- Lifecycle transitions
-- Result semantics
-- Evidence and provenance
+- Implementation lifecycle and Execution lifecycle as distinct state machines
+- Valid transitions, terminal immutability, and stable Execution identity
+- Result success/failure semantics independent of process completion
+- Evidence required to substantiate successful Results and provenance redaction
+- Failure classification, cancellation, deadline, and continuation behavior
 - Failure and protocol error behavior
 - External invocation boundary where declared by a Contract:
   - stable execution identity and lifecycle observation;
