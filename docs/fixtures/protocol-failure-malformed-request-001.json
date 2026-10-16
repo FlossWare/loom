@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1",
+  "id": "protocol-failure-malformed-request-001",
+  "semantic_area": "protocol_failure",
+  "contract": {
+    "id": "example.echo",
+    "version": "1.0"
+  },
+  "operation": "submit",
+  "input": {
+    "request": {
+      "goal": 42
+    }
+  },
+  "expected": {
+    "outcome": "protocol_failure",
+    "category": "malformed_request",
+    "execution_accepted": false
+  }
+}

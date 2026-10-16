@@ -6,6 +6,8 @@ They are **test artifacts**, not a Loom wire format. A fixture may be represente
 
 ## Fixture structure
 
+The versioned envelope schema is [schema-0.1.json](fixtures/schema-0.1.json), and [protocol-failure-malformed-request-001.json](fixtures/protocol-failure-malformed-request-001.json) is the first fixture using it. Validate fixtures against the schema version they declare before passing them to an implementation adapter. The schema validates the common envelope only; domain-specific input and expected-outcome details remain extensible until their semantics are accepted.
+
 A fixture SHOULD contain these fields:
 
 ```yaml
@@ -21,7 +23,7 @@ expected:
   selected_implementation: example.echo.impl.1
 ```
 
-The exact field vocabulary is provisional until the corresponding protocol semantics are frozen. Once the semantic model is accepted, fixture fields that represent normative concepts become part of the conformance contract.
+The envelope is versioned independently from Loom wire representations. Schema 0.1 freezes only the fields needed to identify a fixture and its contract; it does not freeze domain-specific payload vocabulary or define a Loom wire format. When normative semantics change, introduce a compatible schema revision or a new schema version rather than silently changing the meaning of an existing fixture.
 
 ## Required fixture properties
 
