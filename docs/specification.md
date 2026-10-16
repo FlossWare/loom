@@ -157,6 +157,36 @@ Results MUST be distinguishable from execution state and MUST conform to the Con
 
 Evidence is not private reasoning. It represents externally meaningful facts about execution, artifacts, observations, decisions, or verification.
 
+### 2.14 External invocation boundary
+
+A Contract MAY define operations through which an external participant submits
+work to an Implementation and observes the resulting Execution. These operations
+are contract-level semantics; they do not require a particular application
+service class, URL layout, RPC mechanism, or transport.
+
+When a Contract supports external execution, its declared operations MUST make
+the following behavior unambiguous:
+
+- **Submission:** which contract-defined request starts an Execution and how the
+  caller obtains a stable execution identity or handle.
+- **Observation:** how the caller obtains lifecycle state, the current or final
+  Result, protocol-level failures, and applicable Evidence and provenance.
+- **Continuation:** whether an interrupted or incomplete Execution can resume,
+  what state is retained, and whether the original execution identity and
+  history are preserved. A binding that promises durable continuation MUST
+  resume from the implementation's persisted execution state; it MUST NOT
+  require the client to reconstruct hidden server state or replay a private
+  conversation transcript.
+- **Cancellation and deadlines:** whether these controls are supported and how
+  accepted, pending, confirmed, expired, and terminal outcomes are represented.
+  A binding MUST NOT report cancellation as confirmed before the contract's
+  termination conditions are satisfied. A deadline MUST NOT be represented as
+  successful completion.
+
+These operations are optional capabilities of an execution Contract, not
+universal routes or mandatory methods of the Loom protocol. Their exact request
+and response representations are defined by the Contract and its Binding.
+
 ## 3. Composition and resolution
 
 Loom does not hard-code a universal sequence of operations. Composition is derived from Requirements and available Capabilities.
