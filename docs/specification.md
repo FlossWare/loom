@@ -40,19 +40,69 @@ An Implementation MUST be evaluated against the Contract semantics it claims to 
 
 ### 2.3 Capability
 
-A **Capability** is a declared property or service an Implementation provides and that may be used when resolving requirements.
+A **Capability** declares a service or property that an Implementation claims to
+provide under a Contract identity and version. A Capability MAY include
+contract-defined attributes that constrain where or how it can be used.
 
-Capabilities are protocol-level declarations. Their concrete representation is intentionally left open until matching, versioning, cardinality, and compatibility rules are finalized.
+A capability declaration is an assertion, not proof of conformance. An
+Implementation MUST NOT advertise a Capability it does not provide, and a
+candidate MUST be evaluated against the referenced Contract and version rules
+before it is treated as eligible.
 
 ### 2.4 Requirement
 
-A **Requirement** expresses a condition that must be satisfied before an Implementation or Plan can execute correctly.
+A **Requirement** declares the Capability conditions an Implementation or Plan
+needs before it can execute correctly. A Requirement identifies the required
+Contract, the acceptable version or compatibility condition, required attribute
+constraints, and the number of distinct implementations needed where cardinality
+matters.
 
-A Requirement may be satisfied by an available Capability or by acquiring/building an Implementation that provides the required Capability.
+A Requirement may be satisfied by an eligible registered Implementation or,
+where supported, by acquiring/building an Implementation that provides the
+required Capability. A Provider/Builder does not itself satisfy the target
+Requirement merely because it claims it can build something; the produced
+Implementation must be validated and made available under the target Contract.
 
-Requirement-to-Capability matching is normative protocol behavior and MUST NOT depend on implementation language.
+### 2.5 Capability/Requirement matching
 
-### 2.5 Registration
+Matching is a normative protocol operation and MUST NOT depend on programming
+language, registry product, transport, or candidate ordering.
+
+A candidate is eligible only when all required conditions match:
+
+1. **Contract identity:** the candidate's Capability identifies the required
+   Contract. Identifiers are compared according to the Contract's declared
+   canonicalization rules; absent such rules, equality is exact. Fuzzy names,
+   descriptions, or implementation labels MUST NOT establish a match.
+2. **Version compatibility:** the candidate's declared Contract version
+   satisfies the Requirement's compatibility condition. Version strings are
+   opaque unless the Contract defines their syntax and comparison rules. Loom
+   MUST NOT infer semantic-version ranges or compatibility from string shape.
+   If no compatibility rule is declared, exact version equality is required.
+3. **Required attributes:** every required attribute constraint is satisfied.
+   A missing attribute MUST NOT be treated as a match. Preferred attributes may
+   rank eligible candidates but MUST NOT make an otherwise ineligible candidate
+   eligible.
+4. **Cardinality:** the resolved set contains the number of distinct
+   Implementations required by the Requirement. A Requirement MUST define
+   minimum/maximum cardinality when it needs fan-out or optional capability
+   semantics; otherwise, it requires one eligible Implementation.
+
+Discovery returns eligible candidates; it does not silently substitute an
+incompatible candidate. If the available candidates cannot satisfy required
+cardinality, the Requirement is unsatisfied and resolution MUST report that
+condition explicitly.
+
+Candidate selection is separate from eligibility. When multiple candidates are
+eligible, a selection policy MAY choose among them using declared criteria such
+as cost, health, locality, or priority. Unless a Contract explicitly requires
+ordering, the order in which Discovery returns eligible candidates has no
+semantic meaning. A bounded discovery response MUST indicate that it is bounded
+and provide a way to retrieve additional candidates or establish that the result
+set is complete.
+
+
+### 2.6 Registration
 
 A **Registration** declares that an Implementation is available for discovery.
 
@@ -69,7 +119,7 @@ metadata
 
 Metadata may contain implementation-specific information, but interoperability MUST NOT depend on language-specific metadata.
 
-### 2.6 Discovery
+### 2.7 Discovery
 
 **Discovery** resolves a Requirement or Contract request to one or more suitable Registrations.
 
@@ -86,7 +136,7 @@ A discovery implementation may use:
 
 Loom does not require a central registry.
 
-### 2.7 Provider / Builder
+### 2.8 Provider / Builder
 
 A **Provider** or **Builder** is an Implementation capable of acquiring or constructing another Implementation that satisfies a requested Contract or Requirement.
 
@@ -94,7 +144,7 @@ This extends discovery beyond the question "what is already running?" to the que
 
 The acquisition/build operation remains governed by a Contract. Builders do not receive special protocol status merely because they create other Implementations.
 
-### 2.8 Endpoint
+### 2.9 Endpoint
 
 An **Endpoint** identifies where an Implementation may be invoked. It is represented by a URI.
 
@@ -109,7 +159,7 @@ jms://broker/loom/service
 
 These are examples of endpoint addressing, not a requirement that Loom support those particular schemes.
 
-### 2.9 Binding
+### 2.10 Binding
 
 A **Binding** realizes Loom invocation semantics over a concrete communication mechanism.
 
@@ -121,7 +171,7 @@ OpenAPI, where useful, describes an HTTP-facing realization. It does not define 
 
 The proposed HTTP/REST binding requirements are documented separately in [`bindings/http-rest.md`](bindings/http-rest.md). They apply only when an implementation declares an HTTP binding and do not add transport-specific assumptions to this specification.
 
-### 2.10 Plan
+### 2.11 Plan
 
 A **Plan** is an Implementation that represents a composition or execution strategy for other Implementations.
 
@@ -139,7 +189,7 @@ A Plan may therefore contain or reference:
 
 This permits recursive composition without introducing a separate protocol hierarchy for orchestration.
 
-### 2.11 Execution
+### 2.12 Execution
 
 An **Execution** is the runtime realization of an Implementation invocation.
 
@@ -152,7 +202,7 @@ in a Result. A Plan describes what may be executed; an Execution records what is
 actually occurring or occurred. An Execution can finish normally while its
 Result reports that the requested task did not satisfy its success criteria.
 
-### 2.12 Result
+### 2.13 Result
 
 A **Result** records the outcome of a Contract operation or Execution. The
 Contract MUST define what its outcomes mean and what observable evidence is
@@ -173,7 +223,7 @@ Retryability is a failure classification or policy input; it MUST NOT by itself
 trigger a retry or override the Contract's authorization, deadline, or terminal
 state rules. A partial Result MUST NOT be presented as full success.
 
-### 2.13 Evidence
+### 2.14 Evidence
 
 **Evidence** is language-neutral information produced or preserved during
 Execution that supports verification, evaluation, provenance, or audit.
@@ -185,7 +235,7 @@ Contract MUST identify any evidence required to substantiate a successful Result
 Evidence and provenance exposed to a caller MUST respect the Binding's
 authorization and redaction rules.
 
-### 2.14 External invocation boundary
+### 2.15 External invocation boundary
 
 A Contract MAY define operations through which an external participant submits
 work to an Implementation and observes the resulting Execution. These operations
