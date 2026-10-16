@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flossware.org/loom/schemas/action-result-0.1.json",
+  "title": "Loom Action and Result Envelopes 0.1",
+  "description": "Language-neutral structural envelopes for Actions and Results. Domain payloads and behavioral conformance are defined by the referenced Contract.",
+  "$defs": {
+    "action": {
+      "type": "object",
+      "required": ["action_id", "contract_id", "contract_version", "input"],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "action_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contract_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contract_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque Contract version; comparison semantics belong to the Contract."
+        },
+        "execution_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional caller-provided execution identity where explicitly supported by the Contract."
+        },
+        "input": {
+          "type": "object",
+          "description": "Contract-specific input. The referenced Contract SHOULD provide a stricter schema."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Non-sensitive, Contract-defined request metadata."
+        }
+      },
+      "additionalProperties": true
+    },
+    "result": {
+      "type": "object",
+      "required": ["schema_version", "result_id", "execution_id", "outcome"],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "result_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outcome": {
+          "enum": [
+            "succeeded",
+            "partially_succeeded",
+            "failed",
+            "policy_denied",
+            "cancelled",
+            "deadline_exceeded"
+          ]
+        },
+        "output": {
+          "type": "object",
+          "description": "Contract-specific structured output."
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact"
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind"],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {},
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "failure": {
+          "$ref": "#/$defs/failure"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence_reference"
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "implementation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "contract_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "contract_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "attributes": {
+              "type": "object",
+              "description": "Non-sensitive provenance attributes."
+            }
+          },
+          "additionalProperties": true
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Non-sensitive Contract-defined Result metadata."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": ["failed", "policy_denied", "cancelled", "deadline_exceeded"]
+              }
+            },
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "$ref": "#/$defs/failure"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "failure": {
+      "type": "object",
+      "required": ["category"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable machine-readable failure category."
+        },
+        "message": {
+          "type": "string"
+        },
+        "retryable": {
+          "type": "boolean",
+          "description": "A policy input, not an instruction to retry."
+        },
+        "details": {
+          "type": "object",
+          "description": "Non-sensitive, Contract-defined structured failure details."
+        }
+      },
+      "additionalProperties": true
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["artifact_id"],
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "type": "object",
+          "required": ["algorithm", "value"],
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "integrity_status": {
+          "enum": ["unverified", "verified", "invalid", "unavailable"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "evidence_reference": {
+      "type": "object",
+      "required": ["evidence_id"],
+      "properties": {
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "supports": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/action"
+    },
+    {
+      "$ref": "#/$defs/result"
+    }
+  ]
+}
