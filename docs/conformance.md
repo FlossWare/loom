@@ -15,6 +15,9 @@ The suite will be developed against the normative semantics in this repository, 
 - Endpoint URI resolution
 - Binding invocation
 - Dependency resolution
+- Explicit resolution ambiguity and unsatisfied Requirement outcomes
+- Handoff preservation of required context, structured Results, Evidence, provenance, and constraints
+- Authorization and explicit failure when required handoff context cannot be preserved
 - Plan composition
 - Implementation lifecycle and Execution lifecycle as distinct state machines
 - Valid transitions, terminal immutability, and stable Execution identity
