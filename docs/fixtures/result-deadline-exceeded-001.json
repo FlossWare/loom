@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1",
+  "result_id": "result.example.deadline-exceeded.001",
+  "execution_id": "exec.example.deadline-exceeded.001",
+  "outcome": "deadline_exceeded",
+  "failure": {
+    "category": "execution.deadline_exceeded",
+    "message": "The execution deadline expired before success was established.",
+    "retryable": false,
+    "details": {
+      "deadline": "2026-10-16T12:30:00Z"
+    }
+  },
+  "evidence": [],
+  "provenance": {
+    "implementation_id": "impl.example.execution-service.1",
+    "event_ids": [
+      "event.example.deadline-exceeded.001"
+    ]
+  }
+}
