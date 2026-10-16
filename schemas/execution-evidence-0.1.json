@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flossware.org/loom/schemas/execution-evidence-0.1.json",
+  "title": "Loom Execution Evidence Envelope 0.1",
+  "description": "Language-neutral envelope for observable execution trace events, evidence, and evaluations. Structural validation does not establish truth, authorization, or conformance.",
+  "type": "object",
+  "required": ["schema_version", "execution_id"],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "execution_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable opaque identifier for one execution."
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "plan_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "implementation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parent_execution_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional explicit relationship to a prior execution attempt."
+    },
+    "trace_events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/trace_event"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidence_item"
+      }
+    },
+    "evaluations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evaluation"
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Optional domain-specific extension data. MUST NOT contain credentials or private model chain-of-thought."
+    }
+  },
+  "$defs": {
+    "trace_event": {
+      "type": "object",
+      "required": ["event_id", "execution_id", "event_type", "occurred_at"],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable machine-readable event type; namespaced extensions are permitted."
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "outcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "failure_category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "attributes": {
+          "type": "object",
+          "description": "Non-sensitive event attributes. Contract-specific keys are permitted."
+        }
+      },
+      "additionalProperties": true
+    },
+    "evidence_item": {
+      "type": "object",
+      "required": ["evidence_id", "kind", "source"],
+      "properties": {
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "required": ["type", "id"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "execution_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "supports": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "artifact": {
+          "type": "object",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "media_type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "digest": {
+              "type": "object",
+              "required": ["algorithm", "value"],
+              "properties": {
+                "algorithm": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "integrity_status": {
+              "enum": ["unverified", "verified", "invalid", "unavailable"]
+            }
+          },
+          "additionalProperties": true
+        },
+        "summary": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "evaluation": {
+      "type": "object",
+      "required": ["evaluation_id", "execution_id", "result_id", "outcome"],
+      "properties": {
+        "evaluation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "criterion_set_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outcome": {
+          "enum": ["met", "not_met", "inconclusive", "not_evaluated"]
+        },
+        "evaluator": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": true
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["criterion_id", "outcome"],
+            "properties": {
+              "criterion_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "outcome": {
+                "enum": ["met", "not_met", "inconclusive", "not_evaluated"]
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "summary": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "score": {
+          "type": "number"
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
