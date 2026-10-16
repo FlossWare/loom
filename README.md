@@ -44,6 +44,25 @@ The repository naming and layering rule is defined by FlossWare engineering stan
 
 The core model is intentionally recursive. Implementations are governed by the same protocol rules regardless of their internal form. A Plan may therefore compose other implementations without becoming a privileged primitive.
 
+## Compositional architecture and reusable patterns
+
+These patterns are design guidance for Loom implementations, not additional protocol primitives. Each realization may use different classes or modules as long as the observable contract semantics and conformance requirements are preserved.
+
+- **Stable contract, interchangeable implementation.** Consumers depend on the Contract and its declared requirements, not a concrete class, vendor, language, or deployment. An implementation may be replaced when it satisfies the same contract and compatibility constraints.
+- **Recursive composition.** An Implementation may itself be a Plan that invokes other Implementations. Composition does not create a second kind of contract or give the Plan privileged semantics. Inputs, results, failures, lifecycle state, evidence, and provenance must remain observable across the composition boundary as required by the contract.
+- **Decorators for orthogonal behavior.** Cross-cutting concerns such as caching, retries, tracing, policy checks, or measurement may wrap an implementation when the wrapper preserves the declared contract. A decorator must not silently change result semantics, authorization, or compatibility; any changed requirements or capabilities must be explicit.
+- **Adapters at external boundaries.** HTTP/REST, JMS, in-process calls, MCP, and other client-facing forms are bindings or adapters around contract operations. They translate between external representations and Loom operations; they do not redefine the underlying contract or make their transport mandatory for other implementations.
+- **Bridges between independent dimensions.** Keep concerns that vary independently behind explicit boundaries, such as domain semantics versus language bindings, execution coordination versus provider selection, and contract representation versus transport. This avoids multiplying special cases whenever a new language, provider, or binding is introduced.
+- **Explicit handoff and evidence.** A composed implementation should pass the state required by the next implementation to independently evaluate its work, including relevant inputs, prior results, evidence, provenance, and failure details. Passing only a prose summary is insufficient when the contract requires the underlying state.
+
+### Avoid
+
+- Treating a particular framework, class hierarchy, or GoF pattern name as a Loom protocol requirement.
+- Making a Plan or orchestrator a privileged exception to ordinary contract rules.
+- Coupling a domain contract to one transport or language-specific serialization.
+- Hiding failures, discarding required evidence, or changing result meaning during delegation.
+- Adding a new Loom primitive when composition of existing contracts already expresses the behavior.
+
 ## Repository boundary
 
 loom is the normative home of Loom itself: protocol semantics, binding semantics, and conformance requirements.
