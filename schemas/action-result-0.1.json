@@ -7,6 +7,7 @@
     "action": {
       "type": "object",
       "required": [
+        "schema_version",
         "action_id",
         "contract_id",
         "contract_version",
