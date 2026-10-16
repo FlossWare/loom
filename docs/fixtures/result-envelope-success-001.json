@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "result_id": "result.example.echo.001",
+  "execution_id": "exec.example.echo.001",
+  "outcome": "succeeded",
+  "output": {
+    "message": "hello"
+  },
+  "artifacts": [],
+  "observations": [
+    {
+      "kind": "worker.completed",
+      "value": {
+        "worker_id": "impl.example.echo.1"
+      },
+      "observed_at": "2026-10-16T12:30:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "evidence.example.echo.001",
+      "kind": "output-check",
+      "supports": ["criterion.echo-output"]
+    }
+  ],
+  "provenance": {
+    "implementation_id": "impl.example.echo.1",
+    "contract_id": "example.echo",
+    "contract_version": "1",
+    "event_ids": ["event.example.echo.completed.001"]
+  }
+}
