@@ -143,19 +143,47 @@ This permits recursive composition without introducing a separate protocol hiera
 
 An **Execution** is the runtime realization of an Implementation invocation.
 
-Execution state is distinct from a Plan definition. A Plan describes what may be executed; an Execution records what is actually occurring or occurred.
+An Execution has an identity, a lifecycle, and may produce a Result and Evidence.
+Its identity MUST remain stable for the lifetime of that Execution, including
+observation and any continuation supported by its Contract.
+
+Execution state is distinct from both a Plan definition and the outcome recorded
+in a Result. A Plan describes what may be executed; an Execution records what is
+actually occurring or occurred. An Execution can finish normally while its
+Result reports that the requested task did not satisfy its success criteria.
 
 ### 2.12 Result
 
-A **Result** is the protocol-defined outcome of an Execution.
+A **Result** records the outcome of a Contract operation or Execution. The
+Contract MUST define what its outcomes mean and what observable evidence is
+required to claim success.
 
-Results MUST be distinguishable from execution state and MUST conform to the Contract's result semantics.
+A Result MUST distinguish success from failure. Success MUST mean that the
+Contract's declared success criteria were satisfied, not merely that a process
+returned, a request was accepted, or an operation stopped without raising an
+exception. A Result MAY also distinguish partial outcomes, policy denial,
+cancellation, deadline expiry, or other domain-relevant outcomes. If a Contract
+maps one of those cases to a broader failure outcome, it MUST preserve the
+specific cause when that distinction affects retry, safety, audit, or client
+behavior.
+
+A Result MAY contain typed output/artifacts, observations, failure details,
+Evidence, and provenance. The Contract defines their shape and semantics.
+Retryability is a failure classification or policy input; it MUST NOT by itself
+trigger a retry or override the Contract's authorization, deadline, or terminal
+state rules. A partial Result MUST NOT be presented as full success.
 
 ### 2.13 Evidence
 
-**Evidence** is language-neutral information produced or preserved during Execution that supports verification, evaluation, provenance, or audit.
+**Evidence** is language-neutral information produced or preserved during
+Execution that supports verification, evaluation, provenance, or audit.
 
-Evidence is not private reasoning. It represents externally meaningful facts about execution, artifacts, observations, decisions, or verification.
+Evidence represents externally meaningful facts about execution, artifacts,
+observations, decisions, and verification. It is not private reasoning.
+Evidence MUST remain distinguishable from conclusions derived from it, and a
+Contract MUST identify any evidence required to substantiate a successful Result.
+Evidence and provenance exposed to a caller MUST respect the Binding's
+authorization and redaction rules.
 
 ### 2.14 External invocation boundary
 
@@ -230,23 +258,76 @@ The exact resolution algorithm is not yet frozen. In particular, matching semant
 
 ## 4. Lifecycle
 
-Loom implementations have lifecycle semantics, but the complete state machine is intentionally a subsequent specification task.
+Implementation lifecycle and Execution lifecycle are separate state machines.
+A Contract that exposes either lifecycle MUST define its supported states,
+transitions, preconditions, and terminality. Implementations MUST NOT use one
+state field to ambiguously represent both availability and an individual
+invocation.
 
-The eventual lifecycle model MUST define:
+### 4.1 Implementation lifecycle
 
-- discoverable;
-- available;
-- acquiring/building;
-- registered;
-- ready;
-- executing;
-- completed;
-- failed;
+An Implementation lifecycle describes whether an Implementation can be
+discovered and acquired or invoked. The Contract MAY use different labels, but
+its state model MUST distinguish the applicable semantic conditions, including:
+
+- discoverable or registered;
+- available or ready to invoke;
+- acquiring or building, where applicable;
 - unavailable;
-- retired;
-- relevant transitions and their preconditions.
+- retired.
 
-The model MUST distinguish implementation availability from execution state.
+A Registration is a discovery declaration; it does not by itself prove that an
+Implementation is currently ready to execute. A Plan definition is not an
+Execution and MUST NOT be assigned an Execution's runtime state.
+
+### 4.2 Execution lifecycle
+
+An Execution lifecycle describes one invocation. A Contract MUST distinguish,
+at minimum, these semantic conditions when applicable:
+
+- **not started:** the request has been accepted but execution work has not begun;
+- **running:** execution work is in progress;
+- **interrupted:** work is temporarily stopped and may continue only if the
+  Contract supports continuation;
+- **terminal:** the invocation will perform no further work.
+
+The Contract MAY choose its own state labels, but MUST define an unambiguous
+mapping to these conditions. It MUST also distinguish normal completion,
+execution failure, accepted cancellation, and deadline expiry where those
+causes affect observable behavior.
+
+A valid transition MUST be defined before it is used. At minimum, a running
+Execution may become terminal or interrupted; an interrupted Execution may
+resume only under the Contract's continuation rules or become terminal.
+A terminal Execution MUST NOT be silently reopened, rewritten, or reported as
+running. A new attempt that is a new Execution MUST have a distinct identity and
+an explicit relationship to the prior attempt.
+
+Normal completion of an Execution does not imply that the requested task
+succeeded. The Result's outcome determines whether the Contract's success
+criteria were met; the Execution lifecycle records whether and how invocation
+work ended.
+
+### 4.3 Cancellation, deadlines, and continuation
+
+Where a Contract supports cancellation, it MUST distinguish a request being
+accepted from termination being confirmed. Cancellation MUST be idempotent for
+the same Execution identity where the operation can be repeated safely. An
+Execution MUST NOT be reported as cancelled until its work has stopped and its
+terminal state has been committed. A terminal outcome MUST remain unchanged
+when a later cancellation request arrives.
+
+Where a Contract supports deadlines, the deadline MUST identify one unambiguous
+instant. Expiry MUST be observable and MUST NOT be reported as successful
+completion. The Contract MUST define how deadline expiry interacts with active
+work, cancellation, and continuation. If deadline expiry maps to a general
+failure status, its cause MUST remain explicit.
+
+Where a Contract promises durable continuation, the implementation MUST retain
+the state required to resume the same Execution identity and relevant history.
+Continuation MUST NOT silently reset or extend the deadline, discard required
+Evidence, or require the client to reconstruct hidden server state. These
+requirements do not mandate a storage technology or transport.
 
 ## 5. Conformance
 
