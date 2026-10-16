@@ -24,6 +24,8 @@ The suite will be developed against the normative semantics in this repository, 
 - Result success/failure semantics independent of process completion
 - Evidence required to substantiate successful Results and provenance redaction
 - Failure classification, cancellation, deadline, and continuation behavior
+- Protocol failures distinct from execution Results, including pre-acceptance and post-acceptance cases
+- Stable machine-readable failure categories, retryability, idempotency, and redaction
 - Failure and protocol error behavior
 - External invocation boundary where declared by a Contract:
   - stable execution identity and lifecycle observation;

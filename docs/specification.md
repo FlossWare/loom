@@ -475,7 +475,51 @@ In particular:
 
 None of these, individually, defines Loom.
 
-## 7. Prior art and interoperability tests
+## 7. Protocol failures
+
+A **protocol failure** means that a Contract operation could not be interpreted,
+authorized, resolved, or carried out according to the applicable protocol
+semantics. Protocol failures are distinct from a Result produced by a valid
+Execution.
+
+A conforming Contract MUST define the protocol-failure conditions applicable to
+its operations and MUST make them distinguishable from execution outcomes. At
+minimum, the Contract MUST address invalid or malformed requests, unsupported
+operations or versions, unmet preconditions, authorization denial, unresolved
+Requirements, invalid lifecycle transitions, and unavailable or missing
+Execution identities where applicable.
+
+The reporting boundary depends on when the failure occurs:
+
+- Before an Execution is accepted, a protocol failure MUST NOT be represented as
+  a successful Result or as though an Execution had begun.
+- After an Execution is accepted, failures that occur during its work MUST be
+  observable through that Execution's lifecycle and Result/failure semantics.
+  A later observation or continuation protocol failure MUST NOT erase or rewrite
+  the accepted Execution's persisted outcome.
+- A valid operation that runs and fails its Contract's success criteria is an
+  execution outcome, not a malformed-request or transport failure.
+
+A protocol failure MUST have a stable machine-readable category or code defined
+by the Contract or Binding. A human-readable message MAY accompany it but MUST
+NOT be the only way to determine its semantic category. Where an Execution
+identity or correlation identifier has already been assigned, the failure SHOULD
+include enough authorized correlation information to identify the affected
+operation without leaking private state.
+
+Retryability MUST be explicit when it affects caller or resolver behavior.
+A retryable failure classification does not itself authorize a retry; retry
+policy, idempotency, deadlines, and terminal-state rules remain governed by the
+applicable Contract. A repeated request MUST NOT silently duplicate a
+non-idempotent operation unless the Contract explicitly permits that behavior.
+
+A failure representation MUST NOT expose credentials, secrets, private
+reasoning, or evidence the caller is not authorized to access. A Binding maps
+these semantic failures into its transport-specific representation; the Loom
+core does not prescribe HTTP status codes, MCP error envelopes, or a universal
+wire schema.
+
+## 8. Prior art and interoperability tests
 
 OSGi is useful prior art for dynamic services, requirements/capabilities, and lifecycle. BPEL is useful prior art and a stress test for orchestration semantics.
 
@@ -485,7 +529,7 @@ A strong architectural test is whether a future BPEL engine could use Loom for s
 
 Another strong test is whether a future `loom-java` can consume the same protocol definitions as `loom-ai` without translation of Python classes into Java classes.
 
-## 8. Explicit non-goals
+## 9. Explicit non-goals
 
 Loom does not define:
 
