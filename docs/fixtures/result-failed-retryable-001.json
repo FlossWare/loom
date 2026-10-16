@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1",
+  "result_id": "result.example.retryable-failure.001",
+  "execution_id": "exec.example.retryable-failure.001",
+  "outcome": "failed",
+  "failure": {
+    "category": "dependency.temporarily_unavailable",
+    "message": "A required dependency is temporarily unavailable.",
+    "retryable": true,
+    "details": {
+      "dependency": "example-store"
+    }
+  },
+  "evidence": [],
+  "provenance": {
+    "implementation_id": "impl.example.echo.1",
+    "event_ids": [
+      "event.example.retryable-failure.001"
+    ]
+  }
+}
