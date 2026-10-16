@@ -37,6 +37,14 @@ Loom semantics
 - No custom Loom markup is required merely to make the protocol machine-readable.
 - Conformance must test semantics rather than serialized syntax alone.
 
+## Proposed HTTP/REST binding profile
+
+The following profile proposes requirements for future HTTP/REST bindings. It does not impose HTTP on Loom core or assert that this repository currently defines an HTTP API. When an implementation chooses HTTP/REST, its binding contract MUST document resource/operation mapping, request and response representations, media negotiation, protocol errors, and compatibility expectations. This is a binding requirement only: HTTP, JSON, OpenAPI, and vendor media types MUST NOT become normative requirements of Loom core.
+
+HTTP bindings SHOULD use standard media types where sufficient, SHOULD use RFC 9457 Problem Details for machine-readable HTTP errors where appropriate, and SHOULD define explicit `406 Not Acceptable` and `415 Unsupported Media Type` behavior. A binding MUST distinguish transport/protocol failures from Loom domain outcomes and preserve contract semantics through serialization.
+
+Adoption of the shared FlossWare [ADR-0031: REST Representation Contracts and API Evolution](https://github.com/FlossWare/engineering-standards/blob/main/adr/ADR-0031-rest-representation-contracts-and-api-evolution.md) is conditional on that ADR being accepted. Existing HTTP implementations must be inventoried and migrated incrementally; this ADR does not invent routes or require an HTTP implementation.
+
 ## Open work
 
 Evaluate existing standards for:

@@ -27,3 +27,24 @@ The suite should expose protocol-level fixtures and assertions that can be consu
 The first complete implementation target is loom-python. AI-specific implementations are a separate domain layer and are not required to define Loom conformance.
 
 A future loom-java or loom-erlang implementation must be able to exercise the same conformance semantics without depending on Python implementation details.
+
+
+## Binding-specific conformance profiles
+
+Core conformance verifies Loom semantics independently of transport and serialization. A binding-specific profile verifies that a chosen transport preserves those semantics without making the transport normative for Loom itself.
+
+### HTTP/REST profile
+
+The `loom` repository currently defines no normative HTTP routes or HTTP execution API. An implementation that later provides an HTTP/REST binding must document and test that binding separately. The profile must reference the proposed [FlossWare ADR-0031: REST Representation Contracts and API Evolution](https://github.com/FlossWare/engineering-standards/blob/main/adr/ADR-0031-rest-representation-contracts-and-api-evolution.md), subject to its adoption through the organization-wide ADR process.
+
+Where an HTTP binding exists, its conformance fixtures should cover:
+
+- contract operation to resource/method mapping;
+- request and response schemas and media types;
+- `Accept` and `Content-Type` behavior, including `406 Not Acceptable` and `415 Unsupported Media Type` where applicable;
+- documented machine-readable errors, using RFC 9457 Problem Details where appropriate;
+- distinction between HTTP/protocol failures and domain-level execution outcomes;
+- compatibility behavior for supported representations and versions;
+- preservation of Loom lifecycle, result, evidence, and provenance semantics through serialization.
+
+These checks are conditional on a binding being implemented. Core conformance must not require HTTP, JSON, OpenAPI, a vendor media type, or a particular URL layout.
