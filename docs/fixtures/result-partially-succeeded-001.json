@@ -1,0 +1,72 @@
+{
+  "schema_version": "0.1",
+  "result_id": "result.example.partial-success.001",
+  "execution_id": "exec.example.partial-success.001",
+  "outcome": "partially_succeeded",
+  "output": {
+    "criteria": {
+      "repository_inspected": "satisfied",
+      "bounded_change_applied": "satisfied",
+      "verification_passed": "not_satisfied"
+    }
+  },
+  "observations": [
+    {
+      "kind": "criterion",
+      "value": {
+        "id": "repository_inspected",
+        "status": "satisfied"
+      }
+    },
+    {
+      "kind": "criterion",
+      "value": {
+        "id": "bounded_change_applied",
+        "status": "satisfied"
+      }
+    },
+    {
+      "kind": "criterion",
+      "value": {
+        "id": "verification_passed",
+        "status": "not_satisfied"
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "artifact.example.diff.001",
+      "uri": "https://example.invalid/artifacts/partial-success.diff",
+      "media_type": "text/x-diff",
+      "integrity_status": "unverified"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "evidence.example.diff.001",
+      "kind": "repository-diff",
+      "uri": "https://example.invalid/evidence/partial-success.diff",
+      "supports": [
+        "bounded_change_applied"
+      ]
+    }
+  ],
+  "provenance": {
+    "implementation_id": "impl.example.repository-task.1",
+    "contract_id": "example.repository-task",
+    "contract_version": "1.0",
+    "event_ids": [
+      "event.example.partial-success.001"
+    ]
+  },
+  "metadata": {
+    "completed_criteria": [
+      "repository_inspected",
+      "bounded_change_applied"
+    ],
+    "remaining_criteria": [
+      "verification_passed"
+    ],
+    "success_claim_permitted": false
+  }
+}
