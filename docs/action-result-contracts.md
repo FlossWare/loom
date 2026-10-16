@@ -27,7 +27,7 @@ A **Result** records the observable outcome of an accepted Contract operation or
 - `result_id` and `execution_id`: stable identifiers for the Result and its execution;
 - `outcome`: explicit outcome independent of the Execution lifecycle;
 - optional typed `output`, `artifacts`, and `observations`;
-- optional structured `failure`, `evidence`, and `provenance`.
+- structured `failure` when the outcome is `failed`, `policy_denied`, `cancelled`, or `deadline_exceeded`; otherwise `failure` MAY be omitted. Evidence and provenance are optional fields.
 
 The initial common outcomes are:
 
