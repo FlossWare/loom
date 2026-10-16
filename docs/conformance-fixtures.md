@@ -100,6 +100,20 @@ The conformance suite SHOULD include cases for:
   than silent truncation;
 - local and remote handoffs that preserve the same observable contract semantics.
 
+## Protocol-failure fixtures
+
+The suite SHOULD include positive and negative cases that distinguish:
+
+- malformed or unsupported requests rejected before an Execution is accepted;
+- an authorization denial that does not expose protected Result or Evidence data;
+- an accepted Execution whose Worker/Implementation later returns a failure Result;
+- an observation request for a missing Execution identity;
+- an invalid lifecycle transition that leaves terminal state unchanged;
+- a retryable failure classification that does not automatically trigger a retry;
+- a repeated non-idempotent request without a declared idempotency contract;
+- a protocol failure whose machine-readable category remains available even if
+  its human-readable message changes.
+
 ## Relationship to the normative specification
 
 This document describes the test mechanism. It does not freeze unresolved protocol semantics.
