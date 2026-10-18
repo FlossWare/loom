@@ -1,0 +1,58 @@
+{
+  "schema_version": "0.1",
+  "id": "capability-discovery-eligible-set-001",
+  "semantic_area": "capability_discovery",
+  "contract": {
+    "id": "loom.capability-handoff",
+    "version": "0.1"
+  },
+  "operation": "capability_discovery",
+  "input": {
+    "requirement": {
+      "contract_id": "example.search",
+      "contract_version": "0.1",
+      "required_attributes": {
+        "read_only": true
+      },
+      "min_implementations": 1,
+      "max_implementations": 1
+    },
+    "candidates": [
+      {
+        "implementation_id": "search-a",
+        "contract_id": "example.search",
+        "contract_version": "0.1",
+        "attributes": {
+          "read_only": true
+        }
+      },
+      {
+        "implementation_id": "search-b",
+        "contract_id": "example.search",
+        "contract_version": "0.1",
+        "attributes": {
+          "read_only": false
+        }
+      },
+      {
+        "implementation_id": "search-c",
+        "contract_id": "example.other",
+        "contract_version": "0.1",
+        "attributes": {
+          "read_only": true
+        }
+      }
+    ]
+  },
+  "expected": {
+    "outcome": "satisfied",
+    "eligible_implementations": [
+      "search-a"
+    ],
+    "ineligible_reasons": {
+      "search-b": "required_attribute_mismatch",
+      "search-c": "contract_identity_mismatch"
+    },
+    "candidate_order_affects_eligibility": false
+  }
+}
