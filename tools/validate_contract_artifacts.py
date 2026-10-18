@@ -70,6 +70,9 @@ def main() -> int:
             Draft202012Validator(action_result_schema["$defs"]["result"]).validate(
                 fixture
             )
+        elif "execution_id" in fixture and "trace_events" in fixture:
+            evidence_schema = schemas[SCHEMA_DIR / "execution-evidence-0.1.json"]
+            Draft202012Validator(evidence_schema).validate(fixture)
         else:
             raise ValueError(
                 f"{path.relative_to(ROOT)} is neither a fixture envelope nor "
