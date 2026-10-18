@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "id": "distributed-worker-registration-001",
+  "semantic_area": "distributed_worker_registration",
+  "contract": {
+    "id": "loom.distributed-worker",
+    "version": "0.1"
+  },
+  "operation": "distributed_worker_registration",
+  "input": {
+    "worker": {
+      "worker_id": "worker-a",
+      "implementation_id": "impl.search.a",
+      "contract": {
+        "id": "example.search",
+        "version": "0.1"
+      },
+      "capabilities": [
+        "search.read"
+      ],
+      "lifecycle": "ready"
+    },
+    "authenticated_identity": "principal.worker-a",
+    "authorization": true
+  },
+  "expected": {
+    "outcome": "registered",
+    "worker_id": "worker-a",
+    "capability_advertisement_is_authorization": false
+  }
+}
