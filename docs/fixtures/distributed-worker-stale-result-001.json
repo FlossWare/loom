@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.1",
+  "id": "distributed-worker-stale-result-001",
+  "semantic_area": "distributed_worker_result",
+  "contract": {
+    "id": "loom.distributed-worker",
+    "version": "0.1"
+  },
+  "operation": "distributed_worker_result",
+  "input": {
+    "task_id": "task-1",
+    "current_lease_generation": 2,
+    "result": {
+      "worker_id": "worker-a",
+      "lease_generation": 1,
+      "outcome": "succeeded"
+    }
+  },
+  "expected": {
+    "outcome": "stale_lease_rejected",
+    "result_committed": false,
+    "terminal_state_rewritten": false
+  }
+}
