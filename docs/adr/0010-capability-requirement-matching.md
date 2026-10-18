@@ -1,6 +1,6 @@
 # ADR-0010: Capability and Requirement Matching
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Related issues:** #2, #11
 - **Depends on:** ADR-0001 (language-neutral protocol), ADR-0007 (contract representation layers)
 

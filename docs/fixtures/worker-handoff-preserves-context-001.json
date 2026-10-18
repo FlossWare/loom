@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1",
+  "id": "worker-handoff-preserves-context-001",
+  "semantic_area": "worker_handoff",
+  "contract": {
+    "id": "loom.capability-handoff",
+    "version": "0.1"
+  },
+  "operation": "worker_handoff",
+  "input": {
+    "execution_id": "exec-1",
+    "handoff_id": "handoff-1",
+    "source_implementation": "worker-a",
+    "destination_implementation": "worker-b",
+    "required_context": {
+      "input": {
+        "goal": "verify change"
+      },
+      "prior_result": {
+        "outcome": "partially_succeeded",
+        "output": {
+          "changed_files": [
+            "src/A.java"
+          ]
+        }
+      },
+      "evidence": [
+        {
+          "evidence_id": "ev-1"
+        }
+      ],
+      "provenance": {
+        "implementation_id": "worker-a"
+      },
+      "constraints": {
+        "deadline": "2030-01-01T00:00:00Z"
+      }
+    },
+    "context_limit_bytes": 4096
+  },
+  "expected": {
+    "outcome": "handed_off",
+    "execution_id_preserved": true,
+    "structured_result_preserved": true,
+    "evidence_preserved": true,
+    "provenance_preserved": true,
+    "constraints_preserved": true,
+    "receiver_validates_input": true
+  }
+}
