@@ -165,3 +165,8 @@ This document describes the test mechanism. It does not freeze unresolved protoc
 The normative specification must first define the meaning of matching, lifecycle transitions, protocol failures, evidence, and other required behaviors. Conformance fixtures then turn those definitions into executable interoperability tests.
 
 That ordering is deliberate. Otherwise the test suite becomes a second, accidental specification, which is precisely the sort of architectural archaeology Loom is intended to avoid.
+
+
+## Capability discovery and handoff fixtures
+
+The normative semantics are defined in [Capability Discovery and Worker Handoff Contract](capability-discovery-handoff.md). Fixtures cover eligible-set filtering, explicit ambiguity without a selection policy, preservation of structured context and provenance, rejection of unauthorized context, and fail-closed context-size limits.
