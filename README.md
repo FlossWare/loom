@@ -27,7 +27,7 @@ Future implementations are peers, not replacements for the language-neutral cont
     loom-ai-java
     loom-ai-erlang
 
-The repository naming and layering rule is defined by FlossWare engineering standard ADR-0024.
+The repository naming and layering rule is defined by FlossWare/standards ADR-0024.
 
 ## Architecture
 
