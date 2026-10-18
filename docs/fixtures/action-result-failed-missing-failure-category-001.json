@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1",
+  "id": "action-result-failed-missing-failure-category-001",
+  "semantic_area": "action_result_schema",
+  "contract": {
+    "id": "loom.action-result-envelope",
+    "version": "0.1"
+  },
+  "operation": "validate_schema",
+  "input": {
+    "schema": "schemas/action-result-0.1.json",
+    "result": {
+      "schema_version": "0.1",
+      "result_id": "result-003",
+      "execution_id": "execution-003",
+      "outcome": "failed",
+      "failure": {
+        "message": "The category is intentionally absent",
+        "retryable": false
+      }
+    }
+  },
+  "expected": {
+    "outcome": "schema_invalid",
+    "schema_valid": false,
+    "reason": "failure_category_required"
+  }
+}
