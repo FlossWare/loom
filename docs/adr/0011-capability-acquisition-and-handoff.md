@@ -1,6 +1,6 @@
 # ADR-0011: Capability Acquisition and Handoff
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Related issues:** #2, #11
 - **Depends on:** ADR-0008 (external client execution boundary), ADR-0009 (Execution lifecycle and Result semantics), ADR-0010 (Capability and Requirement matching)
 
