@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1",
+  "id": "distributed-worker-lease-expiry-001",
+  "semantic_area": "distributed_worker_lease",
+  "contract": {
+    "id": "loom.distributed-worker",
+    "version": "0.1"
+  },
+  "operation": "distributed_worker_lease",
+  "input": {
+    "task_id": "task-1",
+    "lease": {
+      "lease_id": "lease-1",
+      "worker_id": "worker-a",
+      "generation": 1,
+      "expires_at": "2030-01-01T00:00:00Z"
+    },
+    "current_time": "2030-01-01T00:00:01Z",
+    "late_heartbeat": true
+  },
+  "expected": {
+    "outcome": "lease_expired",
+    "lease_revived": false,
+    "task_eligible_for_requeue_if_policy_allows": true
+  }
+}
