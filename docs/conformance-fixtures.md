@@ -170,3 +170,8 @@ That ordering is deliberate. Otherwise the test suite becomes a second, accident
 ## Capability discovery and handoff fixtures
 
 The normative semantics are defined in [Capability Discovery and Worker Handoff Contract](capability-discovery-handoff.md). Fixtures cover eligible-set filtering, explicit ambiguity without a selection policy, preservation of structured context and provenance, rejection of unauthorized context, and fail-closed context-size limits.
+
+
+## Distributed Worker fixtures
+
+The [Distributed Worker Protocol](distributed-worker-protocol.md) and ADR-0012 define stable registration, finite leases, fencing generations, at-least-once delivery, retry/requeue, and duplicate-result semantics. Fixtures cover registration, lease expiry, stale-result rejection, idempotent duplicate completion, and retryable failure.

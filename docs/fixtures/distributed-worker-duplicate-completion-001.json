@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.1",
+  "id": "distributed-worker-duplicate-completion-001",
+  "semantic_area": "distributed_worker_idempotency",
+  "contract": {
+    "id": "loom.distributed-worker",
+    "version": "0.1"
+  },
+  "operation": "distributed_worker_idempotency",
+  "input": {
+    "task_id": "task-2",
+    "idempotency_key": "task-2",
+    "recorded_result": {
+      "result_id": "result-2",
+      "outcome": "succeeded"
+    },
+    "duplicate_submit": true
+  },
+  "expected": {
+    "outcome": "existing_result_returned",
+    "worker_invoked_again": false,
+    "recorded_result_rewritten": false
+  }
+}
