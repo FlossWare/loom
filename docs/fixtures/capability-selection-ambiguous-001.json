@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1",
+  "id": "capability-selection-ambiguous-001",
+  "semantic_area": "capability_selection",
+  "contract": {
+    "id": "loom.capability-handoff",
+    "version": "0.1"
+  },
+  "operation": "capability_selection",
+  "input": {
+    "requirement": {
+      "contract_id": "example.search",
+      "contract_version": "0.1",
+      "min_implementations": 1,
+      "max_implementations": 1
+    },
+    "eligible_candidates": [
+      "search-a",
+      "search-b"
+    ],
+    "selection_policy": null
+  },
+  "expected": {
+    "outcome": "ambiguous",
+    "selected_implementation": null,
+    "registry_order_selects_candidate": false
+  }
+}
