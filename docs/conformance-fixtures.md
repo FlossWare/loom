@@ -154,6 +154,7 @@ These two fixtures test the conditional schema rule that failed Results require 
 
 - [action-result-failed-with-failure-001.json](fixtures/action-result-failed-with-failure-001.json): expected to pass structural validation.
 - [action-result-failed-missing-failure-001.json](fixtures/action-result-failed-missing-failure-001.json): expected to fail because `outcome: failed` requires `failure`.
+- [action-result-failed-missing-failure-category-001.json](fixtures/action-result-failed-missing-failure-category-001.json): expected to fail because a present `failure` object still requires a non-empty `category`.
 
 These fixtures deliberately distinguish fixture-envelope validation from the nested Action/Result schema check. Validating the outer conformance fixture alone is not evidence that its embedded Result satisfies the Action/Result contract.
 
