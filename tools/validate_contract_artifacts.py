@@ -62,14 +62,8 @@ def main() -> int:
                     )
         elif "action_id" in fixture:
             action_result_validator.validate(fixture)
-            Draft202012Validator(action_result_schema["$defs"]["action"]).validate(
-                fixture
-            )
         elif "result_id" in fixture:
             action_result_validator.validate(fixture)
-            Draft202012Validator(action_result_schema["$defs"]["result"]).validate(
-                fixture
-            )
         elif "execution_id" in fixture and "trace_events" in fixture:
             evidence_schema = schemas[SCHEMA_DIR / "execution-evidence-0.1.json"]
             Draft202012Validator(evidence_schema).validate(fixture)
