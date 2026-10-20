@@ -189,7 +189,8 @@
     "failure": {
       "type": "object",
       "required": [
-        "category"
+        "category",
+        "retryable"
       ],
       "properties": {
         "category": {
