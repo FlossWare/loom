@@ -40,6 +40,8 @@ Fixtures SHOULD include both positive and negative cases.
 
 ## Initial fixture categories
 
+Action/Result schema rejection fixtures include missing failure category and missing failure retryability. Every failure Result must declare whether it is retryable; consumers still apply their own retry policy.
+
 The suite should grow from the protocol's semantic model in this order:
 
 1. Contract identity and compatibility
